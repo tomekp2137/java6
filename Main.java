@@ -49,9 +49,6 @@ class Main {
         return name;
     }
 
-    
-
-    
   
     public static void exercise1() throws IOException, WrongStudentName, WrongStudentAge {
         var name = ReadName();
