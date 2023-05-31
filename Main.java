@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 class WrongStudentName extends Exception { }
 class WrongStudentAge extends Exception { }
-
+class WrongMenu extends Exception{ }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -11,7 +11,7 @@ class Main {
     public static void main(String[] args) {
         while(true) {
             try {
-                int ex = menu();
+                int ex = Readmenu();
                 switch(ex) {
                     case 1: exercise1(); break;
                     case 2: exercise2(); break;
@@ -24,20 +24,33 @@ class Main {
                 System.out.println("Błędne imie studenta!");
             } catch(WrongStudentAge e) {
                 System.out.println("Błędny wiek studenta!");
-              }
-             
+            }catch(WrongMenu e) {
+                System.out.println("Błąd");
+            }
         
         }
     }
 
-    public static int menu() {
+    public static int Readmenu() throws WrongMenu {
+      int menu1;
         System.out.println("Wciśnij:");
         System.out.println("1 - aby dodać studenta");
         System.out.println("2 - aby wypisać wszystkich studentów");
         System.out.println("3 - aby wyszukać studenta po imieniu");
         System.out.println("0 - aby wyjść z programu");
-        return scan.nextInt();
+         try {
+    menu1 = scan.nextInt();
+    } catch (Exception e) {
+      scan.nextLine();
+      throw new WrongMenu();
     }
+    if (menu1 < 0 || menu1 > 3) {
+      throw new WrongMenu();
+    }
+    return menu1;
+    }
+      
+  
 
     public static String ReadName() throws WrongStudentName {
         scan.nextLine();
@@ -49,7 +62,6 @@ class Main {
         return name;
     }
   public static int ReadAge() throws WrongStudentAge {
-      
       System.out.println("Podaj wiek: ");
       int age = scan.nextInt();
        if(age < 1 || age >100)
